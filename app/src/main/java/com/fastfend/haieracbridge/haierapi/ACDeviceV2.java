@@ -94,6 +94,17 @@ public class ACDeviceV2 extends ACDevice {
                 }
                 Log.println(Log.INFO,"ACDevice[" + getDeviceID() + "]", "HealthMode set to: ON");
                 break;
+            case "20200S":
+                if(attributeValue.equals("302000"))
+                {
+                    DisplayOn = false;
+                }
+                else if(attributeValue.equals("302001"))
+                {
+                    DisplayOn = true;
+                }
+                Log.println(Log.INFO,"ACDevice[" + getDeviceID() + "]", "Display set to: " + (DisplayOn ? "ON" : "OFF"));
+                break;
             case "20200D":
                 switch (attributeValue)
                 {
@@ -263,6 +274,30 @@ public class ACDeviceV2 extends ACDevice {
                     }
                 });
             }
+        }
+    }
+
+    @Override
+    public void SetDisplayOn(boolean isOn) {
+        if(PoweredOn) {
+            String value = isOn ? "302001" : "302000";
+            _device.writeAttribute("20200S", value, new IuSDKCallback() {
+                @Override
+                public void onCallback(uSDKErrorConst status) {
+                    if (status != uSDKErrorConst.RET_USDK_OK) {
+                        try {
+                            Log.println(Log.ERROR, "ACDevice[" + getDeviceID() + "]", status.name());
+                            throw new Exception("Error during sending command");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        DisplayOn = isOn;
+                    }
+                }
+            });
         }
     }
 

@@ -68,6 +68,7 @@ public class ServerFactory {
                                         object.addProperty("swing_rl", device.getVerticalSway());
                                         object.addProperty("swing_ud", device.getHorizontalSway());
                                         object.addProperty("healthmode", device.getHealthMode());
+                                        object.addProperty("displaystate", device.getDisplayOn());
 
                                         GsonRepresentation rep = new GsonRepresentation<>(object);
                                         response.setEntity(rep);
@@ -143,6 +144,14 @@ public class ServerFactory {
                                                 if(device.getHealthMode() != val)
                                                 {
                                                     device.SetHealthMode(val);
+                                                }
+                                            }
+                                            if(object.has("displaystate"))
+                                            {
+                                                boolean val = object.get("displaystate").getAsBoolean();
+                                                if(device.getDisplayOn() != val)
+                                                {
+                                                    device.SetDisplayOn(val);
                                                 }
                                             }
                                             device.sendSetData();

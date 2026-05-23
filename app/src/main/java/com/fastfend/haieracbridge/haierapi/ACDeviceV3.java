@@ -49,6 +49,10 @@ public class ACDeviceV3 extends ACDevice {
                 HealthMode = attributeValue.equals("true");;
                 Log.println(Log.INFO,"ACDevice[" + getDeviceID() + "]", "HealthMode set to: " + (HealthMode ? "ON" : "OFF"));
                 break;
+            case "screenDisplayStatus":
+                DisplayOn = attributeValue.equals("true");
+                Log.println(Log.INFO,"ACDevice[" + getDeviceID() + "]", "Display set to: " + (DisplayOn ? "ON" : "OFF"));
+                break;
             case "operationMode":
                 switch (attributeValue)
                 {
@@ -154,6 +158,13 @@ public class ACDeviceV3 extends ACDevice {
     }
 
     @Override
+    public void SetDisplayOn(boolean isOn) {
+        if(PoweredOn) {
+            DisplayOn = isOn;
+        }
+    }
+
+    @Override
     public void SetTargetTemperature(int temp) {
         if(PoweredOn) {
             SetTemp = temp;
@@ -245,7 +256,7 @@ public class ACDeviceV3 extends ACDevice {
             arguments.add(new uSDKArgument("pmvStatus", getValueFromAttribute("pmvStatus")));
             arguments.add(new uSDKArgument("intelligenceStatus", getValueFromAttribute("intelligenceStatus")));
             arguments.add(new uSDKArgument("halfDegreeSettingStatus", getValueFromAttribute("halfDegreeSettingStatus")));
-            arguments.add(new uSDKArgument("screenDisplayStatus", getValueFromAttribute("screenDisplayStatus")));
+            arguments.add(new uSDKArgument("screenDisplayStatus", DisplayOn ? "true" : "false"));
             arguments.add(new uSDKArgument("10degreeHeatingStatus", getValueFromAttribute("10degreeHeatingStatus")));
             arguments.add(new uSDKArgument("echoStatus", getValueFromAttribute("echoStatus")));
             arguments.add(new uSDKArgument("lockStatus", getValueFromAttribute("lockStatus")));
@@ -266,7 +277,7 @@ public class ACDeviceV3 extends ACDevice {
             arguments.add(new uSDKArgument("cloudFilterChangeFlag", getValueFromAttribute("cloudFilterChangeFlag")));
             arguments.add(new uSDKArgument("cleaningTimeStatus", getValueFromAttribute("cleaningTimeStatus")));
             arguments.add(new uSDKArgument("energySavingStatus", getValueFromAttribute("energySavingStatus")));
-            arguments.add(new uSDKArgument("lightStatus", getValueFromAttribute("lightStatus")));
+            arguments.add(new uSDKArgument("lightStatus", DisplayOn ? "true" : "false"));
             arguments.add(new uSDKArgument("selfCleaningStatus", getValueFromAttribute("selfCleaningStatus")));
             arguments.add(new uSDKArgument("ch2oCleaningStatus", getValueFromAttribute("ch2oCleaningStatus")));
             arguments.add(new uSDKArgument("pm2p5CleaningStatus", getValueFromAttribute("pm2p5CleaningStatus")));

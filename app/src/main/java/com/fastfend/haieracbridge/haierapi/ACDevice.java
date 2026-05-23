@@ -50,6 +50,11 @@ public abstract class ACDevice {
         return HealthMode;
     }
 
+    protected boolean DisplayOn = true;
+    public boolean getDisplayOn() {
+        return DisplayOn;
+    }
+
     protected boolean HorizontalSway = false;
     public boolean getHorizontalSway() {
         return HorizontalSway;
@@ -167,6 +172,7 @@ public abstract class ACDevice {
     public abstract void onDataUpdate(String attributeName, String attributeValue);
     public abstract void SetPower(boolean isOn);
     public abstract void SetHealthMode(boolean isOn);
+    public abstract void SetDisplayOn(boolean isOn);
     public abstract void SetTargetTemperature(int temp);
     public abstract void SetVerticalSway(boolean isOn);
     public abstract void SetHorizontalSway(boolean isOn);

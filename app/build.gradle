@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    ndkVersion "27.0.12077973"
     defaultConfig {
         applicationId "com.fastfend.haieracbridge"
         minSdkVersion 21
